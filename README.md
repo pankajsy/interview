@@ -53,4 +53,6 @@ return the user's routes for only the services listed.
 
 ## Building/Running
 
-TODO: please provide instructions to build and run your program(s) along with any require tools an dependencies.
+System - Ubuntu 18.04.2 LTS, openjdk version "11.0.3" 
+*Compile the Java class file - javac HHinterview.java
+*Run the java complied file - java HHinterview
