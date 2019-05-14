@@ -104,38 +104,64 @@ public class HHinterview {
                         user_services_routes_list.add(user_id + route + user_id);
                     }
                     break;
+		default:
+                    System.out.println(service+" service unavailable (check if misspelled and case-sensitive), please try again.");
             }
         }
         return user_services_routes_list;
     }
 
     public static void main(String[] args) {
-        System.out.println("All routes: " + Arrays.toString(all_routes().toArray()));
-        System.out.println("Unique routes: " + Arrays.toString(unique_routes().toArray()));
+        String ip_choice = "";
+        while(!ip_choice.equals("5")) {
+            System.out.println("Select an option\n 1. Get all Routes\n 2. Get all Unique Routes\n 3. Get all User Routes\n 4. Get Users Routes by Service\n 5. Exit");
+            Scanner scan = new Scanner(System.in);
+            ip_choice = scan.nextLine();
 
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter User Id:");
-        String user_id = scan.nextLine();
-        System.out.println("For user " + user_id + ": " + Arrays.toString(user_allRoutes(user_id).toArray()));
-
-        ArrayList<String> ip_services = new ArrayList<>();
-        while (ip_services.size() < 3) {
-            System.out.println("Enter one of these Services:[\"Komoot\", \"RWGPS\", \"Strava\"]");
-            String ip_service = scan.nextLine();
-            if (ip_services.contains(ip_service)) {
-                System.out.println(ip_service + " service added already.");
-            } else {
-                ip_services.add(ip_service);
-            }
-            System.out.println("Add another service? Type N to stop");
-            String ip = scan.nextLine();
-            if (ip.equals("N")) {
-                break;
+            switch (ip_choice) {
+                case "1":
+                    System.out.println("All routes: " + Arrays.toString(all_routes().toArray()));
+                    break;
+                case "2":
+                    System.out.println("Unique routes: " + Arrays.toString(unique_routes().toArray()));
+                    break;
+                case "3":
+                    System.out.println("Enter User Id:");
+                    String user_id = scan.nextLine();
+                    System.out.println("For user " + user_id + ": " + Arrays.toString(user_allRoutes(user_id).toArray()));
+                    break;
+                case "4":
+                    System.out.println("Enter New User Id:");
+                    String new_user_id = scan.nextLine();
+                    ArrayList<String> ip_services = new ArrayList<>();
+                    while (ip_services.size() < 3) {
+                        System.out.println("Enter one of these Services:[\"Komoot\", \"RWGPS\", \"Strava\"]");
+                        String ip_service = scan.nextLine();
+                        if (Arrays.asList(SERVICES).contains(ip_service)){
+                            if (ip_services.contains(ip_service)) {
+                                System.out.println(ip_service + " service added already.");
+                            } else {
+                                ip_services.add(ip_service);
+                            }
+                            System.out.println("Add another service? Type N to stop");
+                            String ip = scan.nextLine();
+                            if (ip.equals("N")) {
+                                break;
+                            }
+                        }else{
+                            System.out.println(ip_service+" service unavailable (check if misspelled and case-sensitive), please try again.");
+                        }
+                    }
+                    System.out.println("For user " + new_user_id + " services" + Arrays.toString(ip_services.toArray()));
+                    System.out.println(Arrays.toString(userRoutes_byServices(new_user_id, ip_services).toArray()));
+                    break;
+                case "5":
+                    System.out.println("Goodbye");
+                    System.exit(0);
+                default:
+                    System.out.println("Option unavailable, please try again.");
             }
         }
-
-        System.out.println(Arrays.toString(ip_services.toArray()));
-        System.out.println(Arrays.toString(userRoutes_byServices(user_id, ip_services).toArray()));
     }
 }
 
